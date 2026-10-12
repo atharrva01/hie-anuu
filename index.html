@@ -140,18 +140,18 @@ const steps = [
     </div>
     <div class="react" id="react"></div>
     <div class="row"><button class="btn" data-next ${A.food?"":"disabled"}>next →</button></div>`,
-  // 2 weather
+  // 2 battery
   () => `
-    <h2>what was today's weather?</h2>
-    <p class="sub">Not outside. In there.</p>
+    <h2>how's your battery after today?</h2>
+    <p class="sub">Be honest, I can see the percentage 👀</p>
     <div class="opts">
-      ${opt("weather","sunny","☀️","Sunny")}
-      ${opt("weather","cloudy","⛅","Meh, cloudy")}
-      ${opt("weather","rainy","🌧️","Rainy")}
-      ${opt("weather","stormy","⛈️","Full storm")}
+      ${opt("battery","full","🔋","Still full!")}
+      ${opt("battery","half","🙂","Around 50%")}
+      ${opt("battery","low","🪫","Low battery")}
+      ${opt("battery","dead","💀","Switched off")}
     </div>
     <div class="react" id="react"></div>
-    <div class="row"><button class="btn" data-next ${A.weather?"":"disabled"}>next →</button></div>`,
+    <div class="row"><button class="btn" data-next ${A.battery?"":"disabled"}>next →</button></div>`,
   // 3 honesty
   () => `
     <h2>okay but the real answer?</h2>
@@ -199,14 +199,14 @@ const steps = [
     <div class="row"><button class="btn ghost" id="another">another one</button><button class="btn" data-next>okay enough 🙄</button></div>`,
   // 8 receipt
   () => {
-    const W = {sunny:"☀️ sunny",cloudy:"⛅ cloudy",rainy:"🌧️ rainy",stormy:"⛈️ stormy"};
+    const W = {full:"🔋 full",half:"🙂 ~50%",low:"🪫 low",dead:"💀 switched off"};
     const F = {yes:"✅ zhal",["lunch-breakfast"]:"🥪 lunch = breakfast",no:"🙈 not yet",snacks:"🍫 snacks only"};
     const H = ["pretending 🙃","not great 😕","okay-ish 😐","pretty okay 🙂","actually okay 😊"];
     const d = new Date().toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"});
     A.report = [
       `🧾 Anuu's Day Report (${d})`,
       `Food: ${F[A.food]||"-"}`,
-      `Weather: ${W[A.weather]||"-"}`,
+      `Battery: ${W[A.battery]||"-"}`,
       `Real answer: ${H[A.honest ?? 2]}`,
       `Best part: ${A.best||"nothing 😤"}`,
       `Needs: ${(A.need||[]).join(", ")||"nothing, I'm a queen"}`,
@@ -218,7 +218,7 @@ const steps = [
       <div class="t">ANUU'S DAY REPORT</div>
       <div class="r"><span>date</span><span>${d}</span></div>
       <div class="r"><span>food</span><span>${F[A.food]||"-"}</span></div>
-      <div class="r"><span>weather</span><span>${W[A.weather]||"-"}</span></div>
+      <div class="r"><span>battery</span><span>${W[A.battery]||"-"}</span></div>
       <div class="r"><span>real answer</span><span>${H[A.honest ?? 2]}</span></div>
       <div class="r"><span>best part</span><span>${esc(A.best)||"nothing 😤"}</span></div>
       <div class="r"><span>needs</span><span>${(A.need||[]).join(", ")||"nothing"}</span></div>
@@ -239,11 +239,11 @@ const steps = [
 ];
 
 function noteFor(){
-  const w = A.weather, need = A.need||[];
+  const w = A.battery, need = A.need||[];
   let s = "";
-  if (w==="sunny") s = "A sunny day! I'm genuinely happy for you. Keep the good ones coming 🌞";
-  else if (w==="cloudy") s = "Cloudy days count too. You got through it, and that's enough.";
-  else if (w==="rainy") s = "Sorry today was rainy. I'm not going to try to fix it. I'm just here if you want to talk.";
+  if (w==="full") s = "Full battery after a whole day? I'm genuinely happy for you. Keep the good days coming 🌞";
+  else if (w==="half") s = "Half a battery still counts. You got through the day, and that's enough.";
+  else if (w==="low") s = "Sorry today drained you. Go charge yourself: food, sleep, whatever helps. I'm here if you want to talk.";
   else s = "That sounds like a lot. Ranting is allowed, I'll just listen. And you don't have to act okay with me.";
   if (need.includes("chocolates")) s += " Also, the chocolates are on me. Not negotiable 🍫";
   if (need.includes("bike ride")) s += " And the first ride on the Hunter is yours once the stipend comes 🏍️";
@@ -257,7 +257,7 @@ function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">"
 
 const reacts = {
   food:{yes:"zhal! proud of you 😌",["lunch-breakfast"]:"lunch as breakfast again 😂 noted.",no:"go eat first! I'll wait. Seriously.",snacks:"snacks are not a meal, anuu 😑"},
-  weather:{sunny:"yayyy 🎉",cloudy:"meh days happen. I'm glad you're here.",rainy:"come here 🫂 sending a virtual hug.",stormy:"oh no. okay, deep breath. we'll get through this page together."}
+  battery:{full:"yayyy 🎉 what's your secret",half:"decent! plug in for a bit tonight 🔌",low:"come here 🫂 sending a virtual charger.",dead:"oh no. okay, deep breath. this page is your charging point now 🔌"}
 };
 
 function render(){
@@ -277,7 +277,7 @@ card.addEventListener("click",e=>{
     card.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle("sel",x===b));
     $("#react").textContent = reacts[b.dataset.k][b.dataset.v];
     card.querySelector("[data-next]").disabled=false;
-    if (b.dataset.v==="sunny") confetti();
+    if (b.dataset.v==="full") confetti();
   }
   if (b.dataset.m){ const k=b.dataset.m, arr=A[k]=A[k]||[], i=arr.indexOf(b.dataset.v);
     i<0?arr.push(b.dataset.v):arr.splice(i,1); b.classList.toggle("sel"); b.setAttribute("aria-pressed",i<0); }
