@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="hie anuu 💝">
+<meta property="og:description" content="a tiny website. made for you.">
+<title>Anuu's Day Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@400;600;800&display=swap">
+<style>
+/* Layout: one hand-drawn card at a time, like passing notes; ends in a little receipt */
+:root{
+  --bg:#fbe9ec; --bg2:#f6d6de; --card:#fffaf8; --ink:#4a2340; --soft:#8a5a7c;
+  --pink:#ef6f93; --pinkdeep:#d94f78; --mint:#9fd8c4; --sun:#ffc56b; --line:#ecc3cf;
+  --display:"Gaegu","Comic Sans MS",cursive; --body:"Nunito",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  background-image:radial-gradient(var(--bg2) 1.2px,transparent 1.3px);background-size:22px 22px;overflow-x:hidden}
+.wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-block:28px;padding-inline:16px;gap:14px}
+.top{display:flex;align-items:center;gap:10px;width:100%;max-width:440px}
+.dots{display:flex;gap:6px;flex:1}
+.dots i{height:6px;flex:1;border-radius:6px;background:var(--line);transition:background .3s}
+.dots i.on{background:var(--pink)}
+.heart{border:0;background:none;font-size:22px;cursor:pointer;padding:4px;line-height:1;transition:transform .15s}
+.heart:active{transform:scale(1.3)}
+.card{position:relative;width:100%;max-width:440px;background:var(--card);border:2px solid var(--ink);border-radius:22px 18px 24px 16px;
+  padding:26px 22px 22px;box-shadow:6px 7px 0 var(--ink);animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+.card::before{content:"";position:absolute;top:-12px;left:50%;width:90px;height:22px;transform:translateX(-50%) rotate(-3deg);
+  background:color-mix(in srgb,var(--mint) 75%,transparent);border-radius:3px}
+@keyframes pop{from{transform:translateY(16px) scale(.96);opacity:.3}to{transform:none;opacity:1}}
+h1,h2{font-family:var(--display);font-weight:700;line-height:1.05;margin:0 0 6px;text-wrap:balance}
+h1{font-size:44px} h2{font-size:34px}
+p{margin:0 0 10px}
+.sub{color:var(--soft);font-size:15px}
+.hand{font-family:var(--display);font-size:22px;line-height:1.2}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.opts.one{grid-template-columns:1fr}
+.opt{font:600 15px/1.25 var(--body);color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px 10px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;transition:transform .12s,background .2s,box-shadow .12s;box-shadow:3px 3px 0 var(--ink)}
+.opt .e{font-size:30px;line-height:1}
+.opt:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.opt:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.opt.sel{background:var(--bg2)}
+.btn{font:800 16px var(--body);color:#fff;background:var(--pink);border:2px solid var(--ink);border-radius:999px;padding:12px 22px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn:hover{background:var(--pinkdeep)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.opt:focus-visible,.btn:focus-visible,.heart:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px dashed var(--pinkdeep);outline-offset:3px}
+textarea{width:100%;min-height:90px;resize:vertical;font:400 22px/1.25 var(--display);color:var(--ink);background:
+  repeating-linear-gradient(#fff 0 31px,var(--line) 31px 32px);border:2px solid var(--ink);border-radius:12px;padding:6px 12px;margin-top:12px}
+.react{margin-top:14px;padding:10px 14px;border-radius:12px;background:var(--bg);font-family:var(--display);font-size:22px;line-height:1.2}
+.react:empty{display:none}
+/* honesty meter */
+.face{font-size:72px;text-align:center;line-height:1;margin:12px 0 4px;transition:transform .2s}
+input[type=range]{width:100%;accent-color:var(--pink);margin-top:6px}
+.scale{display:flex;justify-content:space-between;font-size:13px;color:var(--soft)}
+/* rant bin */
+.binzone{position:relative;height:120px;margin-top:10px}
+.bin{position:absolute;right:8px;bottom:0;font-size:58px;line-height:1}
+.ball{position:absolute;left:10px;top:10px;font-size:36px;opacity:0}
+.ball.fly{animation:fly 1s cubic-bezier(.3,0,.6,1) forwards}
+@keyframes fly{0%{opacity:1;transform:translate(0,0) rotate(0)}55%{transform:translate(55vw,-40px) rotate(300deg)}100%{opacity:0;transform:translate(min(70vw,290px),60px) rotate(560deg) scale(.5)}}
+.bin.gulp{animation:gulp .4s 1s}
+@keyframes gulp{50%{transform:scale(1.2) rotate(-8deg)}}
+/* pickup game */
+.line{font-family:var(--display);font-size:27px;line-height:1.15;background:var(--bg);border-radius:14px;padding:14px 16px;margin-top:10px;border:2px dashed var(--line)}
+.score{display:flex;justify-content:space-between;font:800 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-top:12px}
+.score b{color:var(--pinkdeep);font-size:15px;font-variant-numeric:tabular-nums}
+/* receipt */
+.receipt{background:#fff;border:2px solid var(--ink);border-radius:6px;padding:16px 16px 20px;margin-top:12px;font:400 15px/1.5 ui-monospace,Menlo,Consolas,monospace;
+  -webkit-mask:radial-gradient(circle 7px at 50% 100%,#0000 98%,#000) 0 0/18px 100% repeat-x;mask:radial-gradient(circle 7px at 50% 100%,#0000 98%,#000) 50% 0/18px 100% repeat-x;padding-bottom:26px}
+.receipt .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding:5px 0}
+.receipt .r span:last-child{text-align:right;min-width:0;overflow-wrap:anywhere}
+.receipt .t{text-align:center;font-weight:700;letter-spacing:.12em;margin-bottom:6px}
+.note{margin-top:16px;font-family:var(--display);font-size:23px;line-height:1.25;transform:rotate(-1deg);background:#fff6c9;padding:14px 16px;border-radius:4px;box-shadow:2px 3px 0 var(--line)}
+.note .sig{text-align:right;margin-top:6px}
+.fine{font-size:13px;color:var(--soft);margin-top:12px}
+a.btn{text-decoration:none;display:inline-block}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:999px;font-weight:700;opacity:0;transition:.3s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (max-width:380px){h1{font-size:38px}h2{font-size:30px}.opt{font-size:14px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+<div class="wrap">
+  <div class="top">
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <button class="heart" id="heart" aria-label="a heart. tap it a few times">💝</button>
+  </div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const IG = "atharvaborade._";
+const A = {}; // answers
+let step = 0;
+const $ = s => document.querySelector(s);
+const card = $("#card");
+
+const lines = [
+  {q:"Do you like water?", a:"Then you already like 70% of me 😌"},
+  {q:"Knock knock.", a:"(you're supposed to say who's there. we've been through this 😭)"},
+  {q:"Are you a parking ticket?", a:"Because you've got FINE written all over you."},
+  {q:"Are you Google?", a:"Because you have everything I've been searching for. (yes I googled what 'trait' means there too)"},
+  {q:"Is your name Wi-Fi?", a:"Because I'm feeling a connection."},
+  {q:"Are you a bike?", a:"Because I'd ride all over Bangalore just to see you. 🏍️"},
+  {q:"Are you a camera?", a:"Because every time I look at you, I smile."}
+];
+const ruins = ["Wahh 🙄","Successfully ruined 🤣","Ik this 😂","Nyc nyc","Thank you thank you 💅"];
+let li = 0, score = {anuu:0, me:0};
+
+const steps = [
+  // 0 intro
+  () => `
+    <h1>hie anuu 💝</h1>
+    <p class="hand">a tiny website. made by me. for you.</p>
+    <p class="sub">It just asks how your day went. Takes 2 minutes. No voice notes, I promise 🤞</p>
+    <div class="row"><button class="btn" data-next>okay fine, ask 🙄</button></div>`,
+  // 1 jevan
+  () => `
+    <h2>jevan zhala ka? 🍛</h2>
+    <p class="sub">The important question comes first.</p>
+    <div class="opts">
+      ${opt("food","yes","✅","Zhal!")}
+      ${opt("food","lunch-breakfast","🥪","Lunch was my breakfast")}
+      ${opt("food","no","🙈","Not yet…")}
+      ${opt("food","snacks","🍫","Only snacks")}
+    </div>
+    <div class="react" id="react"></div>
+    <div class="row"><button class="btn" data-next ${A.food?"":"disabled"}>next →</button></div>`,
+  // 2 weather
+  () => `
+    <h2>what was today's weather?</h2>
+    <p class="sub">Not outside. In there.</p>
+    <div class="opts">
+      ${opt("weather","sunny","☀️","Sunny")}
+      ${opt("weather","cloudy","⛅","Meh, cloudy")}
+      ${opt("weather","rainy","🌧️","Rainy")}
+      ${opt("weather","stormy","⛈️","Full storm")}
+    </div>
+    <div class="react" id="react"></div>
+    <div class="row"><button class="btn" data-next ${A.weather?"":"disabled"}>next →</button></div>`,
+  // 3 honesty
+  () => `
+    <h2>okay but the real answer?</h2>
+    <p class="sub">You said you act okay when you're not. Here you don't have to.</p>
+    <div class="face" id="face">🙂</div>
+    <input type="range" id="honest" min="0" max="4" step="1" value="${A.honest ?? 2}" aria-label="how okay are you really">
+    <div class="scale"><span>pretending</span><span>actually okay</span></div>
+    <div class="react" id="react"></div>
+    <div class="row"><button class="btn" data-next>next →</button></div>`,
+  // 4 best part
+  () => `
+    <h2>best part of today?</h2>
+    <p class="sub">Even a tiny thing. Good chai counts.</p>
+    <textarea id="best" placeholder="the best part was…">${A.best||""}</textarea>
+    <div class="row"><button class="btn" data-next>next →</button><button class="btn ghost" data-skip="best">nothing good happened 😤</button></div>`,
+  // 5 rant
+  () => `
+    <h2>anything annoy you?</h2>
+    <p class="sub">Write it here, then throw it away. Nobody reads this one. Not even me.</p>
+    <textarea id="rant" placeholder="ugh, today…"></textarea>
+    <div class="binzone" aria-hidden="true"><div class="ball" id="ball">📄</div><div class="bin" id="bin">🗑️</div></div>
+    <div class="react" id="react"></div>
+    <div class="row"><button class="btn" id="toss">throw it away 🗑️</button><button class="btn ghost" data-next>skip, all good</button></div>`,
+  // 6 need
+  () => `
+    <h2>what do you need right now?</h2>
+    <p class="sub">Pick as many as you want.</p>
+    <div class="opts">
+      ${multi("need","chocolates","🍫","Chocolates")}
+      ${multi("need","bike ride","🏍️","A bike ride")}
+      ${multi("need","sleep","😴","Sleep. Lots.")}
+      ${multi("need","to rant","🗣️","To rant (you listen)")}
+      ${multi("need","a hug","🫂","A hug")}
+      ${multi("need","a pickup line to ruin","😏","A pickup line to ruin")}
+    </div>
+    <div class="row"><button class="btn" data-next>next →</button></div>`,
+  // 7 pickup game
+  () => `
+    <h2>ruin my pickup line 😤</h2>
+    <p class="sub">I know you will anyway. Might as well keep score.</p>
+    <div class="line" id="line">${lines[li].q}</div>
+    <div class="opts" id="ruinopts"></div>
+    <div class="react" id="react"></div>
+    <div class="score"><span>Anuu <b id="sa">${score.anuu}</b></span><span>Atharva <b id="sm">${score.me}</b></span></div>
+    <div class="row"><button class="btn ghost" id="another">another one</button><button class="btn" data-next>okay enough 🙄</button></div>`,
+  // 8 receipt
+  () => {
+    const W = {sunny:"☀️ sunny",cloudy:"⛅ cloudy",rainy:"🌧️ rainy",stormy:"⛈️ stormy"};
+    const F = {yes:"✅ zhal",["lunch-breakfast"]:"🥪 lunch = breakfast",no:"🙈 not yet",snacks:"🍫 snacks only"};
+    const H = ["pretending 🙃","not great 😕","okay-ish 😐","pretty okay 🙂","actually okay 😊"];
+    const d = new Date().toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"});
+    A.report = [
+      `🧾 Anuu's Day Report (${d})`,
+      `Food: ${F[A.food]||"-"}`,
+      `Weather: ${W[A.weather]||"-"}`,
+      `Real answer: ${H[A.honest ?? 2]}`,
+      `Best part: ${A.best||"nothing 😤"}`,
+      `Needs: ${(A.need||[]).join(", ")||"nothing, I'm a queen"}`,
+      `Pickup lines ruined: ${score.anuu}`
+    ].join("\n");
+    return `
+    <h2>your day, printed 🧾</h2>
+    <div class="receipt">
+      <div class="t">ANUU'S DAY REPORT</div>
+      <div class="r"><span>date</span><span>${d}</span></div>
+      <div class="r"><span>food</span><span>${F[A.food]||"-"}</span></div>
+      <div class="r"><span>weather</span><span>${W[A.weather]||"-"}</span></div>
+      <div class="r"><span>real answer</span><span>${H[A.honest ?? 2]}</span></div>
+      <div class="r"><span>best part</span><span>${esc(A.best)||"nothing 😤"}</span></div>
+      <div class="r"><span>needs</span><span>${(A.need||[]).join(", ")||"nothing"}</span></div>
+      <div class="r"><span>lines ruined</span><span>${score.anuu}</span></div>
+      <div class="r"><span>rants thrown away</span><span>${A.tossed||0}</span></div>
+    </div>
+    <div class="note">
+      ${noteFor()}
+      <div class="sig">— Atharva</div>
+    </div>
+    <div class="row">
+      <button class="btn" id="copy">copy my report</button>
+      <a class="btn ghost" href="https://ig.me/m/${IG}" target="_blank" rel="noopener">send it on insta →</a>
+    </div>
+    <p class="fine">Nothing gets sent automatically. You copy it and send it only if you want to. The rant stays in the bin.</p>
+    <div class="row"><button class="btn ghost" id="again">do it again tomorrow ↺</button></div>`;
+  }
+];
+
+function noteFor(){
+  const w = A.weather, need = A.need||[];
+  let s = "";
+  if (w==="sunny") s = "A sunny day! I'm genuinely happy for you. Keep the good ones coming 🌞";
+  else if (w==="cloudy") s = "Cloudy days count too. You got through it, and that's enough.";
+  else if (w==="rainy") s = "Sorry today was rainy. I'm not going to try to fix it. I'm just here if you want to talk.";
+  else s = "That sounds like a lot. Ranting is allowed, I'll just listen. And you don't have to act okay with me.";
+  if (need.includes("chocolates")) s += " Also, the chocolates are on me. Not negotiable 🍫";
+  if (need.includes("bike ride")) s += " And the first ride on the Hunter is yours once the stipend comes 🏍️";
+  s += "<br><br>No pressure and no proposals (I promised 😌). I just wanted a cuter way to ask than \"hbu\".";
+  return s;
+}
+
+function opt(k,v,e,l){return `<button class="opt ${A[k]===v?"sel":""}" data-k="${k}" data-v="${v}"><span class="e">${e}</span>${l}</button>`}
+function multi(k,v,e,l){const on=(A[k]||[]).includes(v);return `<button class="opt ${on?"sel":""}" data-m="${k}" data-v="${v}" aria-pressed="${on}"><span class="e">${e}</span>${l}</button>`}
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+const reacts = {
+  food:{yes:"zhal! proud of you 😌",["lunch-breakfast"]:"lunch as breakfast again 😂 noted.",no:"go eat first! I'll wait. Seriously.",snacks:"snacks are not a meal, anuu 😑"},
+  weather:{sunny:"yayyy 🎉",cloudy:"meh days happen. I'm glad you're here.",rainy:"come here 🫂 sending a virtual hug.",stormy:"oh no. okay, deep breath. we'll get through this page together."}
+};
+
+function render(){
+  card.innerHTML = steps[step]();
+  card.style.animation="none"; card.offsetHeight; card.style.animation="";
+  document.querySelectorAll("#dots i").forEach((d,i)=>d.classList.toggle("on",i<=step));
+  if (step===3) honesty();
+  if (step===7) game();
+  if (step===8){ confetti(); $("#copy").onclick=copyReport; $("#again").onclick=()=>{Object.keys(A).forEach(k=>delete A[k]);score={anuu:0,me:0};li=0;step=0;render()}; }
+  if (step===5) $("#toss").onclick=toss;
+  const f = card.querySelector("textarea,.opt,.btn"); if (f && step>0) f.focus({preventScroll:true});
+}
+
+card.addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  if (b.dataset.k){ A[b.dataset.k]=b.dataset.v;
+    card.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle("sel",x===b));
+    $("#react").textContent = reacts[b.dataset.k][b.dataset.v];
+    card.querySelector("[data-next]").disabled=false;
+    if (b.dataset.v==="sunny") confetti();
+  }
+  if (b.dataset.m){ const k=b.dataset.m, arr=A[k]=A[k]||[], i=arr.indexOf(b.dataset.v);
+    i<0?arr.push(b.dataset.v):arr.splice(i,1); b.classList.toggle("sel"); b.setAttribute("aria-pressed",i<0); }
+  if (b.dataset.skip){ const t=$("#"+b.dataset.skip); if(t) t.value=""; A[b.dataset.skip]=""; next(); }
+  if (b.hasAttribute("data-next")) next();
+});
+function next(){
+  const t = $("#best"); if (t && step===4) A.best=t.value.trim();
+  step=Math.min(step+1,steps.length-1); render();
+}
+
+function honesty(){
+  const faces=["🙃","😕","😐","🙂","😊"], msgs=["thank you for being honest. you don't have to pretend here 🫂","hmm. want to tell me about it later?","okay-ish is still okay.","good good 🙂","yayyy actually okay!! 🎉"];
+  const r=$("#honest"), f=$("#face");
+  const up=()=>{A.honest=+r.value; f.textContent=faces[r.value]; f.style.transform=`scale(${1+r.value*0.05})`; $("#react").textContent=msgs[r.value]};
+  r.oninput=up; up();
+}
+
+function toss(){
+  const t=$("#rant"); if(!t.value.trim()){ $("#react").textContent="write something first. I know there's something 😏"; return; }
+  const ball=$("#ball"), bin=$("#bin");
+  ball.classList.remove("fly"); bin.classList.remove("gulp"); ball.offsetWidth;
+  ball.classList.add("fly"); bin.classList.add("gulp");
+  t.value=""; A.tossed=(A.tossed||0)+1;
+  const msgs=["gone. bye bye 👋","into the bin it goes 🗑️","yeet. feel lighter?","another one? go on, I'm not judging"];
+  setTimeout(()=>{$("#react").textContent=msgs[Math.min(A.tossed-1,3)]},900);
+}
+
+function game(){
+  const box=$("#ruinopts");
+  const draw=()=>{ $("#line").textContent=lines[li].q; $("#react").textContent="";
+    const picks=[...ruins].sort(()=>Math.random()-.5).slice(0,2);
+    box.innerHTML=picks.map(p=>`<button class="opt" data-ruin>${p}</button>`).join("")+`<button class="opt" data-hear>okay tell me the rest</button>`;
+  };
+  box.onclick=e=>{const b=e.target.closest("button"); if(!b) return;
+    if (b.hasAttribute("data-ruin")){ score.anuu++; $("#react").textContent=`ruined. again. 😭 (it was going to be: "${lines[li].a}")`; }
+    else { score.me++; $("#react").textContent=lines[li].a; }
+    $("#sa").textContent=score.anuu; $("#sm").textContent=score.me;
+    box.querySelectorAll("button").forEach(x=>x.disabled=true);
+  };
+  $("#another").onclick=()=>{li=(li+1)%lines.length; draw()};
+  draw();
+}
+
+function copyReport(){
+  const done=()=>toast("copied! now paste it in my DMs 💌");
+  try{ navigator.clipboard.writeText(A.report).then(done,fallback); }catch(e){ fallback(); }
+  function fallback(){ const ta=document.createElement("textarea"); ta.value=A.report; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy"); done();}catch(e){toast("select the receipt and copy it manually 🙏")} ta.remove(); }
+}
+
+function toast(m){const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2600)}
+
+// secret heart
+let taps=0, tapT;
+$("#heart").onclick=()=>{ taps++; clearTimeout(tapT); tapT=setTimeout(()=>taps=0,1500);
+  if (taps>=5){ taps=0; toast("fun fact: you can't blink while smiling. you just tried, didn't you? 😏"); hearts(); } };
+
+// confetti / hearts
+const cv=$("#fx"), cx=cv.getContext("2d"); let parts=[], raf;
+function size(){cv.width=innerWidth*devicePixelRatio; cv.height=innerHeight*devicePixelRatio}
+addEventListener("resize",size); size();
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function burst(chars,n){ if(reduce) return;
+  for(let i=0;i<n;i++) parts.push({x:Math.random()*cv.width,y:-20*devicePixelRatio-Math.random()*cv.height*.3,vy:(2+Math.random()*3)*devicePixelRatio,vx:(Math.random()-.5)*2,r:Math.random()*6,vr:(Math.random()-.5)*.1,c:chars[i%chars.length],s:(16+Math.random()*14)*devicePixelRatio});
+  if(!raf) loop(); }
+function loop(){ cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.font=`${p.s}px serif`;cx.fillText(p.c,0,0);cx.restore()});
+  parts=parts.filter(p=>p.y<cv.height+40); raf=parts.length?requestAnimationFrame(loop):null; if(!raf) cx.clearRect(0,0,cv.width,cv.height); }
+const confetti=()=>burst(["🎉","💖","✨","🌸","💝"],60);
+const hearts=()=>burst(["💗","💕","💝"],40);
+
+document.getElementById("dots").innerHTML=steps.map(()=>"<i></i>").join("");
+render();
+</script>
+</body>
+</html>
